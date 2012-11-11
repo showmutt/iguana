@@ -30,7 +30,8 @@ namespace Iguana
         }
         public Fighter(string imageName, ContentManager content, int c, int r, string name)
         {
-            //base(imageName, content, c, r);
+            
+            loadSprite(imageName, content, c, r);
         }
         public void takeDamage(double power)
         {

@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Iguana
 {
-    class Stage
+   public class Stage
     {
         private Texture2D stageImage;
         

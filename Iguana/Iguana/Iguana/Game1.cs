@@ -19,6 +19,10 @@ namespace Iguana
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public List<Fighter> fighters = new List<Fighter>();
+        public Stage stage;
+
+        Texture2D barBorder;         // empty white graphic with border
+        Texture2D barFill;          // bar fill graphic, modified by Color class to be the appropriate color
 
         public BattleScene()
         {
@@ -36,7 +40,7 @@ namespace Iguana
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -48,6 +52,15 @@ namespace Iguana
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Fighter f = new Fighter(@"images/square", Content, 1, 1, "fighter one");
+            Fighter f2 = new Fighter(@"images/square2", Content, 1, 1, "fighter two");
+            fighters.Add(f);
+            fighters.Add(f2);
+
+            stage = new Stage(@"images/CurtainsPix1", Content);
+
+            barBorder = Content.Load<Texture2D>(@"images/barBorder");
+            barFill = Content.Load<Texture2D>(@"images/barFill");
 
             // TODO: use this.Content to load your game content here
         }
@@ -86,8 +99,40 @@ namespace Iguana
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
+            stage.draw(spriteBatch);
+            for (int i = 0; i < fighters.Count; i++)
+            { 
+            drawBar(i * 200, 0, Color.Red, Color.Wheat, fighters[i].health);
+            fighters[i].draw(spriteBatch);
+            }
+            
+            
+            spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        public void drawBar(int x, int y, Color healthColor, Color fatigueColor, double value)
+        {
+            Rectangle border;                 // Rectangle that controls the border
+            Rectangle healthRect;             // Rectangle that controls how much of the health bar is filled
+            Rectangle fatigueRect;            // Rectangle that controls how much of the fatigue bar is filled
+            float barValue;
+
+            barValue = (float)(value / 100);
+
+            border = new Rectangle(x, y, 200, 50);
+            healthRect = new Rectangle(x + 2, y + 2, (int)(value * 2), 46);
+            fatigueRect = new Rectangle(x + 2, y + 23, (40 * 2), 25);
+
+            
+            spriteBatch.Draw(barFill, healthRect, healthColor);
+            spriteBatch.Draw(barFill, fatigueRect, fatigueColor);
+            
+        }
+
+
+
+
     }
 }
