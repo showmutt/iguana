@@ -8,21 +8,21 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-//comment
 
-// just adding a random comment here v.3.0
 namespace Iguana
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class BattleScene : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        public List<Fighter> fighters = new List<Fighter>();
 
-        public Game1()
+        public BattleScene()
         {
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }

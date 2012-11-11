@@ -10,7 +10,7 @@ namespace Iguana
         /// </summary>
         static void Main(string[] args)
         {
-            using (Game1 game = new Game1())
+            using (BattleScene game = new BattleScene())
             {
                 game.Run();
             }

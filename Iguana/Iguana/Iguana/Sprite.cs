@@ -26,12 +26,16 @@ namespace Iguana
             sprite = content.Load<Texture2D>(imageName);
             width = sprite.Width / cols;
             height = sprite.Width / cols;
-            //numCols = cols;
-            //numRows = rows;
+            numCols = cols;
+            numRows = rows;
         }
         public void update()
         {
             setCurrentCol(currentCol + 1);
+            if (currentCol >= numCols)
+            {
+                currentCol = 0;
+            }
         }
         public void setCurrentCol(int pos)
         {
