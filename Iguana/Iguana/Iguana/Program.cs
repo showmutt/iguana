@@ -1,8 +1,7 @@
 using System;
-//This is a comment
+
 namespace Iguana
 {
-    //COMMENT
 #if WINDOWS || XBOX
     static class Program
     {
