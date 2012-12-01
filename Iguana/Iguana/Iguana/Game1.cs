@@ -20,7 +20,7 @@ namespace Iguana
         SpriteBatch spriteBatch;
         public List<Fighter> fighters = new List<Fighter>();
         public Stage stage;
-
+        public List<Projectile> projectiles = new List<Projectile>();
         Texture2D barBorder;         // empty white graphic with border
         Texture2D barFill;          // bar fill graphic, modified by Color class to be the appropriate color
 
@@ -83,8 +83,25 @@ namespace Iguana
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-
+            {
+                //this.Exit();
+            }
+               
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                projectiles[i].update();
+            }
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                for (int j = 0; j < fighters.Count; j++)
+                {
+                    if(collision(projectiles[i],fighters[j]))
+                    {
+                        fighters[j].takeDamage(projectiles[i].damage);
+                        //do push back
+                    }
+                }
+            }
             // TODO: Add your update logic here
             for (int i = 0; i < this.fighters.Count; i++)
             {
@@ -94,7 +111,7 @@ namespace Iguana
                     {
                         if (this.fighters[i].punchMode)
                         {
-                            this.fighters[j].takeDamage(1);
+                            this.fighters[j].takeDamage(this.fighters[i].power);
                         }
                     }
                 }
@@ -118,7 +135,10 @@ namespace Iguana
             drawBar(i * 200, 0, Color.Red, Color.Wheat, fighters[i].health);
             fighters[i].draw(spriteBatch);
             }
-            
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                projectiles[i].draw(spriteBatch);
+            }
             
             spriteBatch.End();
             base.Draw(gameTime);

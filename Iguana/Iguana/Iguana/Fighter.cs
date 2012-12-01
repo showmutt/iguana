@@ -18,12 +18,24 @@ namespace Iguana
         public double fatigue = 0.00f;
         public bool isAsleep = false;
         public bool ko = false;
+        public int power = 1;
+        public int basicPush = 1;
         public int hold = 10;
         public int count = 0;
         public KeyboardState pks = Keyboard.GetState();
         public GamePadState pgps = GamePad.GetState(0);
         public int groundLevel;
         public bool punchMode = false;
+        public string specail = "";
+        public bool specailOn = false;
+        public string up = "";
+        public bool upOn = false;
+        public string down = "";
+        public bool downOn = false;
+        public string right = "";
+        public bool rightOn = false;
+        public string left = "";
+        public bool leftOn = false;
 
         public Fighter()
         {
