@@ -41,6 +41,11 @@ namespace Iguana
         {
             currentCol = pos;
         }
+        public Rectangle getCollisionBox(Vector2 pos)
+        {
+            Rectangle r = new Rectangle((int)(pos.X), (int)(pos.Y), this.width, this.height);
+            return r;
+        }
         public void setCurrentRow(int pos)
         {
             currentRow = pos;

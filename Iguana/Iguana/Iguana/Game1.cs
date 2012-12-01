@@ -86,7 +86,19 @@ namespace Iguana
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            for (int i = 0; i < this.fighters.Count; i++)
+            {
+                for (int j = 0; j < this.fighters.Count; j++)
+                {
+                    if (collision(fighters[i], fighters[j]))
+                    {
+                        if (this.fighters[i].punchMode)
+                        {
+                            this.fighters[j].takeDamage(1);
+                        }
+                    }
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -111,7 +123,12 @@ namespace Iguana
             spriteBatch.End();
             base.Draw(gameTime);
         }
-
+        public bool collision(SceneObject obj1, SceneObject obj2)
+        {
+            Rectangle r1 = obj1.sprite.getCollisionBox(obj1.pos);
+            Rectangle r2 = obj2.sprite.getCollisionBox(obj2.pos);
+            return r1.Contains(r2);
+        }
         public void drawBar(int x, int y, Color healthColor, Color fatigueColor, double value)
         {
             Rectangle border;                 // Rectangle that controls the border
