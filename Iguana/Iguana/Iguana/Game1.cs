@@ -23,6 +23,10 @@ namespace Iguana
         public List<Projectile> projectiles = new List<Projectile>();
         Texture2D barBorder;         // empty white graphic with border
         Texture2D barFill;          // bar fill graphic, modified by Color class to be the appropriate color
+        Projectile flags;
+        public int h;
+        public int w;
+        //Projectile 
 
         public BattleScene()
         {
@@ -56,7 +60,7 @@ namespace Iguana
             Fighter f2 = new Fighter(@"images/square2", Content, 1, 1, "fighter two");
             fighters.Add(f);
             fighters.Add(f2);
-
+            //load projectile base;
             stage = new Stage(@"images/CurtainsPix1", Content);
 
             barBorder = Content.Load<Texture2D>(@"images/barBorder");
@@ -86,7 +90,8 @@ namespace Iguana
             {
                 //this.Exit();
             }
-               
+            h=GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            w=GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             for (int i = 0; i < projectiles.Count; i++)
             {
                 projectiles[i].update();
@@ -102,20 +107,78 @@ namespace Iguana
                     }
                 }
             }
-            // TODO: Add your update logic here
             for (int i = 0; i < this.fighters.Count; i++)
             {
                 for (int j = 0; j < this.fighters.Count; j++)
                 {
                     if (collision(fighters[i], fighters[j]))
                     {
-                        if (this.fighters[i].punchMode)
+                        if (i != j)
                         {
-                            this.fighters[j].takeDamage(this.fighters[i].power);
+                            if (this.fighters[i].punchMode)
+                            {
+                                this.fighters[j].takeDamage(this.fighters[i].power);
+                            }
+                            if (this.fighters[i].specailOn)
+                            {
+                                if (fighters[i].specail == "Bearception")
+                                {
+                                    fighters[i].power ++;
+                                }
+                                if (fighters[i].specail == "Polish Freedom")
+                                {
+                                    Random r = new Random();
+                                    for (int f = 0; f < 15; f++)
+                                    {
+                                        Projectile t = flags;
+                                        t.pos.X = r.Next(0, w);
+                                        t.pos.Y = r.Next(0, h);
+                                        t.yIncrease = -7;
+                                        projectiles.Add(t);
+                                    }
+                                }
+                            }
+                            if (this.fighters[i].rightLeftOn)
+                            {
+                                //right
+                            }
+                            if (this.fighters[i].downOn)
+                            {
+                                if (fighters[i].down == "Guitar Smash")
+                                {
+                                    fighters[j].takeDamage(7);
+                                }
+                                if (fighters[i].down == "Guitar Smash")
+                                {
+                                    Random r = new Random();
+                                    for (int f = 0; f < 5; f++)
+                                    {
+                                        Projectile t = flags;
+                                        t.pos.X = r.Next(0, w);
+                                        t.pos.Y = r.Next(0, h);
+                                        t.yIncrease = 3;
+                                        projectiles.Add(t);
+                                    }
+                                }
+                            }
+                            if (this.fighters[i].upOn)
+                            {
+                                if (fighters[i].up == "Peer Scanner")
+                                {
+                                    this.fighters[i].upOn = false;
+                                    fighters[i].up=fighters[j].up;
+                                }
+                                if (fighters[i].up == "Primal Scream")
+                                {
+                                    fighters[i].takeDamage(2);
+                                    fighters[i].gainFatigue(3);
+                                }
+                            }
                         }
                     }
                 }
             }
+            
             base.Update(gameTime);
         }
 

@@ -32,10 +32,8 @@ namespace Iguana
         public bool upOn = false;
         public string down = "";
         public bool downOn = false;
-        public string right = "";
-        public bool rightOn = false;
-        public string left = "";
-        public bool leftOn = false;
+        public string rightLeft = "";
+        public bool rightLeftOn = false;
 
         public Fighter()
         {

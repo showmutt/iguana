@@ -21,6 +21,7 @@ namespace Iguana
         {
             loadSprite(imageName, content, c, r);
         }
+
         public void update()
         {
             this.pos.X += xIncrease;
