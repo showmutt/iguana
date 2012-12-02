@@ -50,12 +50,13 @@ namespace Iguana
         {
             currentRow = pos;
         }
-        public void draw(Vector2 pos, SpriteBatch batch)
+        public void draw(Vector2 pos, SpriteBatch batch,int xZoom,int yZoom,int xOffSet, int yOffSet)
         {
             //Optimize: we are declaring and initing these rect every draw, thats alot of work we can make it better later
-            Rectangle dest = new Rectangle((int)(pos.X), (int)(pos.Y), width, height);
+            Rectangle dest = new Rectangle((int)(pos.X * xZoom), (int)(pos.Y * yZoom), width * xZoom, height * yZoom);
             Rectangle src = new Rectangle(currentCol * width, currentRow * height, width, height);
             batch.Draw(sprite, dest, src, Color.White);
+            //
         }
     }
 }

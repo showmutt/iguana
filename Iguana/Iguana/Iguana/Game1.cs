@@ -193,6 +193,39 @@ namespace Iguana
             // TODO: Add your drawing code here
             spriteBatch.Begin();
             stage.draw(spriteBatch);
+            float lowX;
+            float highX;
+            float lowY;
+            float highY;
+
+            lowX = fighters[0].pos.X;
+            highX = fighters[0].pos.X;
+            lowY = fighters[0].pos.Y;
+            highY = fighters[0].pos.Y;
+            for (int i = 0; i < fighters.Count; i++)
+            {
+                if (lowX > fighters[i].pos.X)
+                {
+                    lowX = fighters[i].pos.X;
+                }
+                if (highX > fighters[i].pos.X)
+                {
+                    lowX = fighters[i].pos.X;
+                }
+                if (lowY > fighters[i].pos.Y)
+                {
+                    lowY = fighters[i].pos.Y;
+                }
+                if (highY > fighters[i].pos.Y)
+                {
+                    lowY = fighters[i].pos.Y;
+                }
+            }
+
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+            }
+
             for (int i = 0; i < fighters.Count; i++)
             { 
             drawBar(i * 200, 0, Color.Red, Color.Wheat, fighters[i].health);
