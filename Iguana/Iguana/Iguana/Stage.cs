@@ -21,9 +21,12 @@ namespace Iguana
             stageImage = content.Load<Texture2D> (imageName);
         }
 
-        public void draw(SpriteBatch create)
+        public void draw(SpriteBatch create, int xR, int yR, int xO, int yO)
         {
-            create.Draw(stageImage, Vector2.Zero, Color.White);
+            //Rectangle src = new Rectangle(0, 0, this.stageImage.Height, stageImage.Width);
+            Rectangle dest = new Rectangle(0 -xO, 0 - yO, xR*1000, yR*1000);
+            //dest=new Rectangle(0-xR,0-yR,stageImage.
+            create.Draw(stageImage, dest, Color.White);
         }
     }
 }

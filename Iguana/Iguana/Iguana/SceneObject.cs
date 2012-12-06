@@ -35,9 +35,9 @@ namespace Iguana
             sprite.update();
         }
 
-        public virtual void draw(SpriteBatch sb,int xZ, int yZ)
+        public virtual void draw(SpriteBatch sb,int xZ, int yZ,int xO,int yO)
         {
-            sprite.draw(pos, sb,xZ,yZ);
+            sprite.draw(pos, sb,xZ,yZ,xO,yO);
         }
     }
 }

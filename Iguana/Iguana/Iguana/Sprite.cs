@@ -41,6 +41,14 @@ namespace Iguana
         {
             currentCol = pos;
         }
+        public int getWidth()
+        {
+            return width;
+        }
+        public int getHeight()
+        {
+            return height;
+        }
         public Rectangle getCollisionBox(Vector2 pos)
         {
             Rectangle r = new Rectangle((int)(pos.X), (int)(pos.Y), this.width, this.height);
@@ -53,7 +61,7 @@ namespace Iguana
         public void draw(Vector2 pos, SpriteBatch batch,int xZoom,int yZoom,int xOffSet, int yOffSet)
         {
             //Optimize: we are declaring and initing these rect every draw, thats alot of work we can make it better later
-            Rectangle dest = new Rectangle((int)(pos.X * xZoom), (int)(pos.Y * yZoom), width * xZoom, height * yZoom);
+            Rectangle dest = new Rectangle( (int)((pos.X ) - xOffSet), (int)((pos.Y) -yOffSet), (width*xZoom), (height*yZoom));
             Rectangle src = new Rectangle(currentCol * width, currentRow * height, width, height);
             batch.Draw(sprite, dest, src, Color.White);
             //

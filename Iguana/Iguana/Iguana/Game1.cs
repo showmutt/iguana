@@ -57,7 +57,9 @@ namespace Iguana
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Fighter f = new Fighter(@"images/square", Content, 1, 1, "fighter one");
+            f.pos = new Vector2(5, 5);
             Fighter f2 = new Fighter(@"images/square2", Content, 1, 1, "fighter two");
+            f2.pos = new Vector2(50, 50);
             fighters.Add(f);
             fighters.Add(f2);
             //load projectile base;
@@ -85,6 +87,9 @@ namespace Iguana
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            fighters[0].pos.X--;
+            fighters[1].pos.X++;
+            fighters[1].pos.Y++;
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
@@ -192,11 +197,11 @@ namespace Iguana
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            stage.draw(spriteBatch);
-            float lowX;
-            float highX;
-            float lowY;
-            float highY;
+            
+            float lowX=0;
+            float highX = 0;
+            float lowY = 0;
+            float highY = 0;
 
             lowX = fighters[0].pos.X;
             highX = fighters[0].pos.X;
@@ -208,32 +213,35 @@ namespace Iguana
                 {
                     lowX = fighters[i].pos.X;
                 }
-                if (highX > fighters[i].pos.X)
+                if (highX < fighters[i].pos.X)
                 {
-                    lowX = fighters[i].pos.X;
+                    highX = fighters[i].pos.X+fighters[i].sprite.getWidth();
                 }
                 if (lowY > fighters[i].pos.Y)
                 {
                     lowY = fighters[i].pos.Y;
                 }
-                if (highY > fighters[i].pos.Y)
+                if (highY < fighters[i].pos.Y)
                 {
-                    lowY = fighters[i].pos.Y;
+                    highY = fighters[i].sprite.getHeight();
                 }
             }
-
             for (int i = 0; i < projectiles.Count; i++)
             {
             }
+            
+            int xRation = (int)(this.w/(highX-lowX));
+            int yRation = (int)(this.h/(highY-lowY));
 
+            stage.draw(spriteBatch, xRation, yRation, (int)(lowX), (int)(lowY));
             for (int i = 0; i < fighters.Count; i++)
             { 
             drawBar(i * 200, 0, Color.Red, Color.Wheat, fighters[i].health);
-            fighters[i].draw(spriteBatch);
+            fighters[i].draw(spriteBatch, xRation, yRation, (int)(lowX), (int)(lowY));
             }
             for (int i = 0; i < projectiles.Count; i++)
             {
-                projectiles[i].draw(spriteBatch);
+                projectiles[i].draw(spriteBatch, xRation, yRation, (int)(lowX), (int)(lowY));
             }
             
             spriteBatch.End();
