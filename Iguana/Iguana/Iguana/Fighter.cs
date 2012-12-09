@@ -22,8 +22,12 @@ namespace Iguana
         public int basicPush = 1;
         public int hold = 10;
         public int count = 0;
+        public PlayerIndex gamePadIndex=0;
+        public KeyboardState ks = Keyboard.GetState();
+        public GamePadState gps = GamePad.GetState(0);
         public KeyboardState pks = Keyboard.GetState();
         public GamePadState pgps = GamePad.GetState(0);
+        public bool useKeyBoard=false;
         public int groundLevel;
         public bool punchMode = false;
         public string specail = "";
@@ -34,6 +38,7 @@ namespace Iguana
         public bool downOn = false;
         public string rightLeft = "";
         public bool rightLeftOn = false;
+
 
         public Fighter()
         {
@@ -71,9 +76,11 @@ namespace Iguana
         }
         public void moveLeft()
         {
+            this.pos.X--;
         }
         public void moveRight()
         {
+            this.pos.X++;
         }
         public void jump()
         {
@@ -99,161 +106,41 @@ namespace Iguana
         {
             return false;//modify or remove later just a place holder for now
         }
-        public void update(KeyboardState ks)
+        public void update()
         {
+
             base.update();
             punchMode = false;
-            if (pos.Y > groundLevel)
-            {
-                pos.Y++;
-            }
+            pks=ks;
+            pgps=gps;
+            ks=Keyboard.GetState();
+            gps=GamePad.GetState(this.gamePadIndex);
             if (isAsleep)
             {
                 loseFatigue(.25f);
+                count++;
             }
-            else
+            else if (useKeyBoard)
             {
                 if (ks.IsKeyDown(Keys.Right))
                 {
-                    if (pks.IsKeyDown(Keys.Right))
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
                         moveRight();
-                    }
                 }
-                else if (ks.IsKeyDown(Keys.Left))
+                if (ks.IsKeyDown(Keys.Left))
                 {
-                    if (pks.IsKeyDown(Keys.Left))
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
-                        moveLeft();
-                    }
+                    moveLeft();
                 }
-                else if (ks.IsKeyDown(Keys.Up))
+                if (ks.IsKeyDown(Keys.F))
                 {
-                    if (pks.IsKeyDown(Keys.Up))
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
-                        jump();
-                    }
+                    this.gainFatigue(.01f);
+
+                    punch();
                 }
-                else if (ks.IsKeyDown(Keys.F))
-                {
-                    if (pks.IsKeyDown(Keys.F))
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
-                        punch();
-                    }
-                }
-                //if (ks.IsKeyDown(Keys.
-            }
-            pks = ks;
-        }
-        public void update(GamePadState gps)
-        {
-            base.update();
-            punchMode = false;
-            if (pos.Y > groundLevel)
-            {
-                pos.Y++;
-            }
-            if (isAsleep)
-            {
-                loseFatigue(.25f);
             }
             else
             {
-                if (gps.DPad.Right == ButtonState.Pressed)
-                {
-                    if (pgps.DPad.Right == ButtonState.Pressed)
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
-                        moveRight();
-                    }
-                }
-                else if (gps.DPad.Left == ButtonState.Pressed)
-                {
-                    if (pgps.DPad.Left == ButtonState.Pressed)
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
-                        moveLeft();
-                    }
-                }
-                else if (gps.DPad.Up == ButtonState.Pressed)
-                {
-                    if (gps.DPad.Up == ButtonState.Pressed)
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
-                        jump();
-                    }
-                }
-                else if (gps.IsButtonDown(Buttons.X))
-                {
-                    if (pgps.IsButtonDown(Buttons.X))
-                    {
-                        count++;
-                    }
-                    else
-                    {
-                        count = 0;
-                    }
-                    if (count <= hold)
-                    {
-                        punch();
-                    }
-                }
-                //if (ks.IsKeyDown(Keys.
             }
-            pgps = gps;
+
         }
     }
 }
